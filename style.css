@@ -1,0 +1,101 @@
+@import url('https://fonts.cdnfonts.com/css/riverdell');
+
+        *{
+            font-family:'Riverdell', cursive;
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: 0.2px;
+        }
+        
+        body {
+            height: 100vh;
+            margin: 0;
+            background: black;
+        }   
+
+        .container {
+            box-shadow: 1px 1px 12px 0px rgb(255, 0, 0);
+            background: url(rose.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            top: 25%;
+            left: 40%;
+            width: 500px;
+            height: 600px;
+            margin-top: -100px;
+            margin-left: -100px;
+            border-radius: 2px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        #task{
+            border-bottom: solid rgba(251, 4, 4, 0.453) 2px;
+            width: 99.1%;
+            margin: 0;
+            height: 50px;
+        }
+
+        input{
+            background: rgb(0, 0, 0);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        input, button{
+            border: none;
+            outline: none;
+        }
+        button{
+            margin: 0;
+            background: transparent;
+        }
+
+        button:hover{
+            opacity: 0.5;
+        }
+
+        li{
+            background: rgba(251, 4, 4, 0.755);
+            margin: 4px 0;
+            color: rgb(0, 0, 0);
+        }
+
+        .task-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .button-container {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .completed{
+            text-decoration: line-through;
+        }
+
+        #checkbox{
+            accent-color: rgb(28, 27, 27);
+        }
+
+        h1{
+            text-align: center;
+            width: 100%;
+            color: rgba(251, 4, 4, 0.629);
+            background: rgb(0, 0, 0);
+            border-bottom: solid rgba(251, 4, 4, 0.453) 2px;
+            margin-bottom: 2rem;
+        }
+
+

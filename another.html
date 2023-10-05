@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to-do List</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Today's to-do</h1>
+    <div class="container">
+        <input type="text" id="task" placeholder="add task...">
+        <ul id="taskList"></ul>
+    </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const taskList = document.getElementById("taskList");
+
+    // Load tasks from local storage when the page loads
+    const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    savedTasks.forEach(function(taskText) {
+        createTask(taskText);
+    });
+
+    function saveTasksToLocalStorage() {
+        const taskTexts = Array.from(taskList.querySelectorAll(".task-text")).map(function(taskTextElement) {
+            return taskTextElement.textContent;
+        });
+        localStorage.setItem("tasks", JSON.stringify(taskTexts));
+    }
+
+    function toggleTaskCompletion(checkbox) {
+        const taskText = checkbox.nextElementSibling;
+        if (checkbox.checked) {
+            taskText.classList.add("completed");
+        } else {
+            taskText.classList.remove("completed");
+        }
+        saveTasksToLocalStorage();
+    }
+
+    function createTask(taskText) {
+        const taskItem = document.createElement("li");
+        taskItem.innerHTML = `
+            <div class="task-container" id='checkbox'>
+                <input type="checkbox">
+                <label class="task-text">${taskText}</label>
+                <input type="text" class="edit-input" style="display:none;">
+                <div class="button-container">
+                    <button class="edit-button">&#9998;</button>
+                    <button class="delete-button"><i class="fa fa-trash-o"></i></button>
+                </div>
+            </div>
+        `;
+
+        const checkbox = taskItem.querySelector("input[type='checkbox']");
+    checkbox.addEventListener("change", function() {
+        toggleTaskCompletion(checkbox);
+    });
+
+        taskList.appendChild(taskItem);
+
+        // Attach event listeners to the edit and delete buttons
+        const editButton = taskItem.querySelector(".edit-button");
+        const deleteButton = taskItem.querySelector(".delete-button");
+        const editInput = taskItem.querySelector(".edit-input");
+        const taskTextLabel = taskItem.querySelector(".task-text");
+
+        editButton.addEventListener("click", function() {
+            if (editInput.style.display === "none" || editInput.style.display === "") {
+                // Show the edit input field and update its value
+                editInput.style.display = "inline";
+                editInput.value = taskTextLabel.textContent;
+                taskTextLabel.style.display = "none";
+                editButton.innerHTML = "&#128190;";
+            } else {
+                // Save the edited task text, hide the input field, and update local storage
+                taskTextLabel.textContent = editInput.value;
+                taskTextLabel.style.display = "inline";
+                editInput.style.display = "none";
+                editButton.innerHTML = "&#9998;";
+                saveTasksToLocalStorage();
+            }
+        });
+
+        deleteButton.addEventListener("click", function() {
+            taskItem.remove();
+            saveTasksToLocalStorage();
+        });
+    }
+
+    document.getElementById("task").addEventListener("keydown", function(event) {
+        if (event.keyCode === 13) {
+            // If the 'Enter' key is pressed, call the addTask function
+            addTask();
+        }
+    });
+
+    function addTask() {
+        const taskInput = document.getElementById("task");
+        const taskText = taskInput.value.trim();
+        if (taskText === "") {
+            alert("Please enter a task!");
+        } else {
+            createTask(taskText);
+            taskInput.value = "";
+            saveTasksToLocalStorage();
+        }
+    }
+
+});
+    </script>
+</body>
+
+</html>
